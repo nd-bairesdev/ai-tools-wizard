@@ -1,0 +1,164 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Theme tokens ─────────────────────────────────────────────────────── */
+/* Each token is "R G B" (no commas) so Tailwind can apply alpha modifiers. */
+:root {
+  --c-brand: 246 97 53;
+  --c-brand-dark: 217 72 23;
+  --c-brand-soft: 251 179 158;
+  --c-brand-50: 255 241 236;
+  --c-brand-100: 255 226 214;
+
+  --c-blue: 26 115 232;
+  --c-blue-soft: 145 188 244;
+  --c-green: 22 168 122;
+  --c-green-soft: 143 213 191;
+  --c-yellow: 255 172 0;
+  --c-yellow-soft: 255 215 133;
+
+  --c-ink: 17 17 17;
+  --c-ink-soft: 42 42 42;
+  --c-ink-muted: 92 92 92;
+  --c-ink-light: 161 161 161;
+
+  --c-canvas: 255 255 255;
+  --c-canvas-off: 247 247 247;
+  --c-canvas-warm: 250 250 247;
+  --c-canvas-card: 255 255 255;
+
+  --c-line: 231 231 231;
+  --c-line-soft: 239 239 239;
+
+  --c-accent-green: 22 168 122;
+  --c-accent-red: 217 72 23;
+}
+
+.dark {
+  --c-brand: 246 97 53;
+  --c-brand-dark: 255 138 92;
+  --c-brand-soft: 110 45 26;
+  --c-brand-50: 38 22 16;
+  --c-brand-100: 50 28 20;
+
+  --c-blue: 100 165 255;
+  --c-blue-soft: 56 95 160;
+  --c-green: 64 200 154;
+  --c-green-soft: 36 96 78;
+  --c-yellow: 255 188 60;
+  --c-yellow-soft: 110 80 22;
+
+  --c-ink: 240 240 240;
+  --c-ink-soft: 210 210 210;
+  --c-ink-muted: 150 150 150;
+  --c-ink-light: 105 105 105;
+
+  --c-canvas: 14 14 14;
+  --c-canvas-off: 22 22 22;
+  --c-canvas-warm: 28 26 22;
+  --c-canvas-card: 24 24 24;
+
+  --c-line: 42 42 42;
+  --c-line-soft: 32 32 32;
+
+  --c-accent-green: 64 200 154;
+  --c-accent-red: 255 138 92;
+}
+
+/* ─── Base ─────────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-canvas-off text-ink font-sans;
+  }
+
+  /* Per the brand book: Outfit Medium for headlines, Outfit Light for
+     subhead/display, Outfit Bold for emphasis. We hold the headline to
+     medium weight so the corporate-restrained look is preserved. */
+  h1, h2, h3, h4 {
+    @apply font-display text-ink tracking-tight;
+    font-weight: 500;
+  }
+
+  ::selection {
+    background: theme("colors.brand.DEFAULT");
+    color: white;
+  }
+
+  :focus-visible {
+    outline: 2px solid theme("colors.brand.DEFAULT");
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+/* ─── Components ───────────────────────────────────────────────────────── */
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-page px-5 sm:px-8;
+  }
+
+  /* Primary CTA: brand orange. */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full
+           bg-brand px-6 py-3 text-sm font-medium text-white
+           transition-all duration-200 ease-out
+           hover:bg-brand-dark hover:shadow-cardHover
+           active:scale-[0.98];
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full
+           border border-line bg-canvas-card px-6 py-3 text-sm font-medium text-ink
+           transition-all duration-200 ease-out
+           hover:border-ink hover:bg-canvas-off
+           active:scale-[0.98];
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-1.5 text-sm font-medium text-ink-muted
+           transition-colors hover:text-ink;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-line
+           bg-canvas-card px-3 py-1 text-xs font-medium text-ink-muted;
+  }
+
+  .card {
+    @apply rounded-card border border-line bg-canvas-card shadow-card
+           transition-shadow duration-200;
+  }
+
+  .card-hover {
+    @apply hover:shadow-cardHover hover:border-ink/20;
+  }
+
+  /* Decorative tick used as a section eyebrow accent. */
+  .accent-tick::before {
+    content: "";
+    @apply mr-2 inline-block h-3 w-1 rounded-sm bg-brand align-middle;
+  }
+}
+
+/* ─── Utilities ────────────────────────────────────────────────────────── */
+@layer utilities {
+  .scrollbar-thin::-webkit-scrollbar { width: 8px; height: 8px; }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: theme("colors.line.DEFAULT");
+    border-radius: 8px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: theme("colors.ink.light");
+  }
+}
